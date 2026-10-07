@@ -2,9 +2,10 @@ name: Angular_DockerImage_v2
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   angular_deploy:
@@ -22,27 +23,32 @@ jobs:
       - name: npm install
         run: npm install
 
-      - name: test
-        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+      - name: Test
+        run: npm test -- --no-watch --no-progress
 
-      - name: build
+      - name: Build
         run: npm run build -- --output-path=docs
 
-      - name: docker login
+      - name: Docker login
         env:
-          DOCKER_USER: ${{secrets.DOCKER_USER}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USER --password-stdin
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 
       - name: Download and run the Docker base image
         run: docker run -d --name http_base httpd
 
-      - name: copy model to the Docker image
-        run: docker cp docs/. http_base:/usr/local/apache2/htdocs
+      - name: Copy Angular build to Docker image
+        run: docker cp docs/browser/. http_base:/usr/local/apache2/htdocs
 
       - name: Build the custom Docker image
-        run: docker commit --change "ENV MODEL_NAME http_base" http_base ${{secrets.DOCKER_USER}}/mycv:${{ github.sha }}
+        run: |
+          docker commit \
+            --change "ENV MODEL_NAME http_base" \
+            http_base \
+            ${{ secrets.DOCKER_USER }}/mycv:${{ github.sha }}
 
       - name: Docker Push
-        run: docker push ${{secrets.DOCKER_USER}}/mycv:${{ github.sha }}
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/mycv:${{ github.sha }}
