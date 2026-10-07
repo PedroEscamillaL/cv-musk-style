@@ -1,0 +1,22 @@
+<div class="header-container">
+
+  <!-- IZQUIERDA -->
+  <div class="left">
+    <h1>{{ header?.name }}</h1>
+    <p class="goal">{{ header?.goalLife }}</p>
+  </div>
+
+  <!-- CENTRO -->
+  <div class="center">
+    <img [src]="header?.photoUrl" alt="profile">
+  </div>
+
+  <!-- DERECHA -->
+  <div class="right">
+    <p>{{ header?.email }}</p>
+    <p>{{ header?.phoneNumber }}</p>
+    <p>{{ header?.location }}</p>
+    <p>{{ header?.socialNetwork }}</p>
+  </div>
+
+</div>

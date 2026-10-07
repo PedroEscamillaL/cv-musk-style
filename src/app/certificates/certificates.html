@@ -1,0 +1,16 @@
+<section class="certificates">
+  <h2>Certificates</h2>
+
+  <ul>
+    <li *ngFor="let cert of certificates || []">
+
+      <p>
+        <strong>{{ cert?.title }}</strong> ({{ cert?.year }})
+      </p>
+
+      <p>{{ cert?.description }}</p>
+
+    </li>
+  </ul>
+</section>
+

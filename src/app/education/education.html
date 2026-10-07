@@ -1,0 +1,17 @@
+<section class="education">
+  <h2>Education</h2>
+
+  <ul>
+    <li *ngFor="let edu of education || []">
+      <p>
+        <strong>{{ edu?.startDate }} - {{ edu?.endDate }}</strong>
+      </p>
+
+      <p>{{ edu?.location }}</p>
+
+      <p><strong>{{ edu?.degree }}</strong></p>
+
+      <p>{{ edu?.institution }}</p>
+    </li>
+  </ul>
+</section>

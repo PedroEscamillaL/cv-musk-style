@@ -1,0 +1,9 @@
+<section class="skills">
+  <h2>Skills</h2>
+
+  <ul>
+    <li *ngFor="let skill of skills || []">
+      <strong>{{ skill?.name }}</strong> - {{ skill?.level }}%
+    </li>
+  </ul>
+</section>

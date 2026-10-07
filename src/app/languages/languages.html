@@ -1,0 +1,9 @@
+<section class="languages">
+  <h2>Languages</h2>
+
+  <ul>
+    <li *ngFor="let lang of languages || []">
+      <strong>{{ lang?.name }}</strong> - {{ lang?.level }}
+    </li>
+  </ul>
+</section>
